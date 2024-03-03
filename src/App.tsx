@@ -1,3 +1,4 @@
+import { DevtoolsProvider, DevtoolsPanel } from "@refinedev/devtools";
 import React from "react";
 import { Authenticated, Refine } from "@refinedev/core";
 import { RefineKbarProvider } from "@refinedev/kbar";
@@ -76,218 +77,222 @@ const App: React.FC = () => {
     <BrowserRouter>
       <ConfigProvider>
         <RefineKbarProvider>
-          <Refine
-            routerProvider={routerProvider}
-            dataProvider={dataProvider}
-            authProvider={authProvider}
-            i18nProvider={i18nProvider}
-            options={{
-              syncWithLocation: true,
-              warnWhenUnsavedChanges: true,
-            }}
-            notificationProvider={useNotificationProvider}
-            resources={[
-              {
-                name: "dashboard",
-                list: "/",
-                meta: {
-                  label: "Dashboard",
-                  icon: <DashboardOutlined />,
+          <DevtoolsProvider>
+            <Refine
+              routerProvider={routerProvider}
+              dataProvider={dataProvider}
+              authProvider={authProvider}
+              i18nProvider={i18nProvider}
+              options={{
+                syncWithLocation: true,
+                warnWhenUnsavedChanges: true,
+                projectId: "TNsKCb-3OWQbx-OUSYeA"
+              }}
+              notificationProvider={useNotificationProvider}
+              resources={[
+                {
+                  name: "dashboard",
+                  list: "/",
+                  meta: {
+                    label: "Dashboard",
+                    icon: <DashboardOutlined />,
+                  },
                 },
-              },
-              {
-                name: "orders",
-                list: "/orders",
-                show: "/orders/show/:id",
-                meta: {
-                  icon: <ShoppingOutlined />,
+                {
+                  name: "orders",
+                  list: "/orders",
+                  show: "/orders/show/:id",
+                  meta: {
+                    icon: <ShoppingOutlined />,
+                  },
                 },
-              },
-              {
-                name: "users",
-                list: "/customers",
-                show: "/customers/show/:id",
-                meta: {
-                  icon: <UserOutlined />,
+                {
+                  name: "users",
+                  list: "/customers",
+                  show: "/customers/show/:id",
+                  meta: {
+                    icon: <UserOutlined />,
+                  },
                 },
-              },
-              {
-                name: "products",
-                list: "/products",
-                create: "/products/create",
-                edit: "/products/edit/:id",
-                show: "/products/show/:id",
-                meta: {
-                  icon: <UnorderedListOutlined />,
+                {
+                  name: "products",
+                  list: "/products",
+                  create: "/products/create",
+                  edit: "/products/edit/:id",
+                  show: "/products/show/:id",
+                  meta: {
+                    icon: <UnorderedListOutlined />,
+                  },
                 },
-              },
-              {
-                name: "categories",
-                list: "/categories",
-                meta: {
-                  icon: <TagsOutlined />,
+                {
+                  name: "categories",
+                  list: "/categories",
+                  meta: {
+                    icon: <TagsOutlined />,
+                  },
                 },
-              },
-              {
-                name: "stores",
-                list: "/stores",
-                create: "/stores/create",
-                edit: "/stores/edit/:id",
-                meta: {
-                  icon: <ShopOutlined />,
+                {
+                  name: "stores",
+                  list: "/stores",
+                  create: "/stores/create",
+                  edit: "/stores/edit/:id",
+                  meta: {
+                    icon: <ShopOutlined />,
+                  },
                 },
-              },
-              {
-                name: "couriers",
-                list: "/couriers",
-                create: "/couriers/create",
-                edit: "/couriers/edit/:id",
-                show: "/couriers/show/:id",
-                meta: {
-                  icon: <BikeWhiteIcon />,
+                {
+                  name: "couriers",
+                  list: "/couriers",
+                  create: "/couriers/create",
+                  edit: "/couriers/edit/:id",
+                  show: "/couriers/show/:id",
+                  meta: {
+                    icon: <BikeWhiteIcon />,
+                  },
                 },
-              },
-            ]}
-          >
-            <Routes>
-              <Route
-                element={
-                  <Authenticated
-                    key="authenticated-routes"
-                    fallback={<CatchAllNavigate to="/login" />}
-                  >
-                    <ThemedLayoutV2 Header={Header} Title={Title}>
-                      <div
-                        style={{
-                          maxWidth: "1200px",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                        }}
-                      >
-                        <Outlet />
-                      </div>
-                    </ThemedLayoutV2>
-                  </Authenticated>
-                }
-              >
-                <Route index element={<DashboardPage />} />
-
-                <Route path="/orders">
-                  <Route index element={<OrderList />} />
-                  <Route path="show/:id" element={<OrderShow />} />
-                </Route>
-
+              ]}
+            >
+              <Routes>
                 <Route
-                  path="/customers"
                   element={
-                    <CustomerList>
-                      <Outlet />
-                    </CustomerList>
+                    <Authenticated
+                      key="authenticated-routes"
+                      fallback={<CatchAllNavigate to="/login" />}
+                    >
+                      <ThemedLayoutV2 Header={Header} Title={Title}>
+                        <div
+                          style={{
+                            maxWidth: "1200px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                          }}
+                        >
+                          <Outlet />
+                        </div>
+                      </ThemedLayoutV2>
+                    </Authenticated>
                   }
                 >
-                  <Route index element={null} />
-                  <Route path="show/:id" element={<CustomerShow />} />
-                </Route>
+                  <Route index element={<DashboardPage />} />
 
-                <Route
-                  path="/products"
-                  element={
-                    <ProductList>
-                      <Outlet />
-                    </ProductList>
-                  }
-                >
-                  <Route index element={null} />
-                  <Route path="create" element={<ProductCreate />} />
-                  <Route path="show/:id" element={<ProductShow />} />
-                  <Route path="edit/:id" element={<ProductEdit />} />
-                </Route>
+                  <Route path="/orders">
+                    <Route index element={<OrderList />} />
+                    <Route path="show/:id" element={<OrderShow />} />
+                  </Route>
 
-                <Route path="/stores">
-                  <Route index element={<StoreList />} />
-                  <Route path="create" element={<StoreCreate />} />
-                  <Route path="edit/:id" element={<StoreEdit />} />
-                </Route>
-
-                <Route path="/categories" element={<CategoryList />} />
-
-                <Route path="/couriers">
                   <Route
+                    path="/customers"
                     element={
-                      <CourierList>
+                      <CustomerList>
                         <Outlet />
-                      </CourierList>
+                      </CustomerList>
                     }
                   >
                     <Route index element={null} />
-                    <Route path="create" element={<CourierCreate />} />
+                    <Route path="show/:id" element={<CustomerShow />} />
                   </Route>
 
-                  <Route path="edit/:id" element={<CourierEdit />} />
-                  <Route path="show/:id" element={<CourierShow />} />
+                  <Route
+                    path="/products"
+                    element={
+                      <ProductList>
+                        <Outlet />
+                      </ProductList>
+                    }
+                  >
+                    <Route index element={null} />
+                    <Route path="create" element={<ProductCreate />} />
+                    <Route path="show/:id" element={<ProductShow />} />
+                    <Route path="edit/:id" element={<ProductEdit />} />
+                  </Route>
+
+                  <Route path="/stores">
+                    <Route index element={<StoreList />} />
+                    <Route path="create" element={<StoreCreate />} />
+                    <Route path="edit/:id" element={<StoreEdit />} />
+                  </Route>
+
+                  <Route path="/categories" element={<CategoryList />} />
+
+                  <Route path="/couriers">
+                    <Route
+                      element={
+                        <CourierList>
+                          <Outlet />
+                        </CourierList>
+                      }
+                    >
+                      <Route index element={null} />
+                      <Route path="create" element={<CourierCreate />} />
+                    </Route>
+
+                    <Route path="edit/:id" element={<CourierEdit />} />
+                    <Route path="show/:id" element={<CourierShow />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route
-                element={
-                  <Authenticated key="auth-pages" fallback={<Outlet />}>
-                    <NavigateToResource resource="dashboard" />
-                  </Authenticated>
-                }
-              >
                 <Route
-                  path="/login"
                   element={
-                    <AuthPage
-                      type="login"
-                      formProps={{
-                        initialValues: {
-                          email: "demo@refine.dev",
-                          password: "demodemo",
-                        },
-                      }}
-                    />
+                    <Authenticated key="auth-pages" fallback={<Outlet />}>
+                      <NavigateToResource resource="dashboard" />
+                    </Authenticated>
                   }
-                />
-                <Route
-                  path="/register"
-                  element={
-                    <AuthPage
-                      type="register"
-                      formProps={{
-                        initialValues: {
-                          email: "demo@refine.dev",
-                          password: "demodemo",
-                        },
-                      }}
-                    />
-                  }
-                />
-                <Route
-                  path="/forgot-password"
-                  element={<AuthPage type="forgotPassword" />}
-                />
-                <Route
-                  path="/update-password"
-                  element={<AuthPage type="updatePassword" />}
-                />
-              </Route>
+                >
+                  <Route
+                    path="/login"
+                    element={
+                      <AuthPage
+                        type="login"
+                        formProps={{
+                          initialValues: {
+                            email: "demo@refine.dev",
+                            password: "demodemo",
+                          },
+                        }}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/register"
+                    element={
+                      <AuthPage
+                        type="register"
+                        formProps={{
+                          initialValues: {
+                            email: "demo@refine.dev",
+                            password: "demodemo",
+                          },
+                        }}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/forgot-password"
+                    element={<AuthPage type="forgotPassword" />}
+                  />
+                  <Route
+                    path="/update-password"
+                    element={<AuthPage type="updatePassword" />}
+                  />
+                </Route>
 
-              <Route
-                element={
-                  <Authenticated key="catch-all">
-                    <ThemedLayoutV2 Header={Header} Title={Title}>
-                      <Outlet />
-                    </ThemedLayoutV2>
-                  </Authenticated>
-                }
-              >
-                <Route path="*" element={<ErrorComponent />} />
-              </Route>
-            </Routes>
-            <UnsavedChangesNotifier />
-            <DocumentTitleHandler />
-          </Refine>
+                <Route
+                  element={
+                    <Authenticated key="catch-all">
+                      <ThemedLayoutV2 Header={Header} Title={Title}>
+                        <Outlet />
+                      </ThemedLayoutV2>
+                    </Authenticated>
+                  }
+                >
+                  <Route path="*" element={<ErrorComponent />} />
+                </Route>
+              </Routes>
+              <UnsavedChangesNotifier />
+              <DocumentTitleHandler />
+            </Refine>
+            <DevtoolsPanel />
+          </DevtoolsProvider>
         </RefineKbarProvider>
       </ConfigProvider>
     </BrowserRouter>
